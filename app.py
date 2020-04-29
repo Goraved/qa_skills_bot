@@ -1,7 +1,7 @@
 import os
 
 import telebot
-from flask import Flask
+from flask import Flask, request
 
 options = {'Statistics': 'Statistics by today', 'URL': 'Site URL'}
 TOKEN = os.getenv('TOKEN')
@@ -25,6 +25,11 @@ def send_text(message):
         bot.send_message(message.chat.id, f'Site URL - https://qa-skills.herokuapp.com')
     else:
         bot.send_message(message.chat.id, 'Sorry, I did not understand this command')
+
+
+@server.route('/' + TOKEN, methods=['POST'])
+def getMessage():
+    bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
 
 
 @server.route("/")
