@@ -1,8 +1,9 @@
 import os
 
-import requests
 import telebot
 from flask import Flask, request
+
+from data import get_stats, get_image_link
 
 options = {'Statistics': 'Statistics by today', 'URL': 'Open site', 'Languages': 'Languages comparison'}
 TOKEN = os.getenv('TOKEN')
@@ -15,32 +16,34 @@ keyboard1.row(options['Statistics'], options['Languages'], options['URL'])
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
+    bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBlF6psFYlbJCeQj7Ter-NBzwhfGLmAAIBAQACVp29CiK-nw64wuY0GQQ')
     bot.send_message(message.chat.id, 'Please choose an option', reply_markup=keyboard1)
+
+
+@bot.message_handler(content_types=['sticker'])
+def get_sticker_id(sticker):
+    bot.send_message(sticker.chat.id, f'Sticker Id - {sticker.sticker.file_id}')
 
 
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     if message.text.lower() == options['Statistics'].lower():
         bot.send_message(message.chat.id, 'Processing...')
-        latest_stats = requests.get('https://qa-skills.herokuapp.com/get_statistics').json()
-        stats = '\n'.join([f"{stat['title']} - {stat['count']} ({stat['percent']})" for stat in latest_stats['stats']])
-        positions = '\n'.join([f"{position['title']} - {position['count']}" for position in latest_stats['positions']])
-        ways = '\n'.join([f"{way['title']} - {way['count']}" for way in latest_stats['ways']])
-        bot.send_message(message.chat.id, f'*Statistics by day*: \n{stats}', parse_mode="Markdown")
-        bot.send_message(message.chat.id, f'*Positions by day*: \n{positions}', parse_mode="Markdown")
-        bot.send_message(message.chat.id, f'*Ways by day*: \n{ways}', parse_mode="Markdown")
-        bot.send_message(message.chat.id, f'More info you can find [here](https://qa-skills.herokuapp.com)',
-                         parse_mode="Markdown")
+        bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBk16psBCMPBU_NmudwEd_jzye7P52AAICAQACVp29Ck7ibIHLQOT_GQQ')
+        bot.send_message(message.chat.id, get_stats(), parse_mode="Markdown")
+        bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBh16prxNbEgme1n_uECeShXDlUhekAAIFAQACVp29Crfk_bYORV93GQQ')
     elif message.text.lower() == options['Languages'].lower():
         bot.send_message(message.chat.id, 'Processing...')
-        trigger_image = requests.get('https://qa-skills.herokuapp.com/get_language_comparison')
-        image_link = 'https://qa-skills.herokuapp.com/static/images/languages.png'
-        bot.send_photo(message.chat.id, image_link)
+        bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBk16psBCMPBU_NmudwEd_jzye7P52AAICAQACVp29Ck7ibIHLQOT_GQQ')
+        bot.send_photo(message.chat.id, get_image_link())
+        bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBh16prxNbEgme1n_uECeShXDlUhekAAIFAQACVp29Crfk_bYORV93GQQ')
+
 
     elif message.text.lower() == options['URL'].lower():
         bot.send_message(message.chat.id, f'Site URL - https://qa-skills.herokuapp.com')
     else:
         bot.send_message(message.chat.id, 'Sorry, I did not understand this command')
+        bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBkl6pr4kVOGisB5LUX54w8USsN6hWAAL5AANWnb0KlWVuqyorGzYZBA')
 
 
 # Local
