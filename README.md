@@ -1,2 +1,2 @@
-# qa_skills_bot
-Telegram bot for the QA SKILLS
+# QA Skills bot
+[Telegram bot](https://t.me/qa_skills_bot) for the [QA Skills](https://qa-skills.herokuapp.com/) site
