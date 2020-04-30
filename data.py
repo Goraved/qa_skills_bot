@@ -1,3 +1,5 @@
+from datetime import date
+
 import requests
 
 
@@ -14,5 +16,7 @@ def get_stats():
 
 
 def get_image_link():
-    trigger_image = requests.get('https://qa-skills.herokuapp.com/get_language_comparison')
-    return 'https://qa-skills.herokuapp.com/static/images/languages.png'
+    # To make sure image created
+    trigger_image = requests.get('https://qa-skills.herokuapp.com/get_language_comparison').json()
+    url = trigger_image['image'].replace('/app', 'https://qa-skills.herokuapp.com')
+    return url
