@@ -1,5 +1,3 @@
-from datetime import date
-
 import requests
 
 
@@ -11,7 +9,7 @@ def get_stats():
     text = '\n\n'.join([f'*Statistics by day*: \n{stats}',
                         f'*Positions by day*: \n{positions}',
                         f'*Ways by day*: \n{ways}',
-                        f'More info you can find [here](https://qa-skills.herokuapp.com)'])
+                        'More info you can find [here](https://qa-skills.herokuapp.com)'])
     return text
 
 

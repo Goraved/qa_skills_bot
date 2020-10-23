@@ -38,7 +38,7 @@ def send_text(message):
         bot.send_photo(message.chat.id, get_image_link())
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBh16prxNbEgme1n_uECeShXDlUhekAAIFAQACVp29Crfk_bYORV93GQQ')
     elif message.text.lower() == options['URL'].lower():
-        bot.send_message(message.chat.id, f'Site URL - https://qa-skills.herokuapp.com')
+        bot.send_message(message.chat.id, 'Site URL - https://qa-skills.herokuapp.com')
     else:
         bot.send_message(message.chat.id, 'Sorry, I did not understand this command')
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBkl6pr4kVOGisB5LUX54w8USsN6hWAAL5AANWnb0KlWVuqyorGzYZBA')

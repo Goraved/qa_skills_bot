@@ -1,4 +1,5 @@
 flask
-telebot
-pytelegrambotapi
 gunicorn
+pylint-fail-under
+pytelegrambotapi
+telebot
