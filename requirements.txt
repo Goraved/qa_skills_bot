@@ -1,5 +1,5 @@
 flask
 gunicorn
 pylint-fail-under
-pytelegrambotapi
 telebot
+pytelegrambotapi
