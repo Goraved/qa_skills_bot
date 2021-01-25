@@ -1,5 +1,4 @@
 flask
 gunicorn
 pylint-fail-under
-telebot
-pytelegrambotapi
+PyTelegramBotAPI
