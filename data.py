@@ -4,16 +4,25 @@ from json.decoder import JSONDecodeError
 import requests
 
 
-def get_stats():
+def get_ways() -> str:
+    latest_stats = try_to_get_latest_stats()
+    ways = '\n'.join([f"{way['title']} - {way['count']}" for way in latest_stats['ways']])
+    return '\n\n'.join([f'*Ways by day*: \n{ways}',
+                        'More info you can find [here](https://qa-skills.herokuapp.com)'])
+
+
+def get_positions() -> str:
+    latest_stats = try_to_get_latest_stats()
+    positions = '\n'.join([f"{position['title']} - {position['count']}" for position in latest_stats['positions']])
+    return '\n\n'.join([f'*Positions by day*: \n{positions}',
+                        'More info you can find [here](https://qa-skills.herokuapp.com)'])
+
+
+def get_stats() -> str:
     latest_stats = try_to_get_latest_stats()
     stats = '\n'.join([f"{stat['title']} - {stat['count']} ({stat['percent']})" for stat in latest_stats['stats']])
-    positions = '\n'.join([f"{position['title']} - {position['count']}" for position in latest_stats['positions']])
-    ways = '\n'.join([f"{way['title']} - {way['count']}" for way in latest_stats['ways']])
-    text = '\n\n'.join([f'*Statistics by day*: \n{stats}',
-                        f'*Positions by day*: \n{positions}',
-                        f'*Ways by day*: \n{ways}',
+    return '\n\n'.join([f'*Statistics by day*: \n{stats}',
                         'More info you can find [here](https://qa-skills.herokuapp.com)'])
-    return text
 
 
 def get_image_link():
