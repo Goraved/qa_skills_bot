@@ -3,9 +3,10 @@ import os
 import telebot
 from flask import Flask, request
 
-from data import get_stats, get_image_link
+from data import get_stats, get_image_link, get_ways, get_positions
 
-options = {'Statistics': 'Statistics by today', 'URL': 'Open site', 'Languages': 'Languages comparison'}
+options = {'Statistics': 'Statistics by today', 'Ways': 'Ways by today', 'Positions': 'Positions by today',
+           'URL': 'Open site', 'Languages': 'Languages comparison'}
 TOKEN = os.getenv('TOKEN')
 bot = telebot.TeleBot(TOKEN)
 server = Flask(__name__)
@@ -32,6 +33,16 @@ def send_text(message):
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBk16psBCMPBU_NmudwEd_jzye7P52AAICAQACVp29Ck7ibIHLQOT_GQQ')
         bot.send_message(message.chat.id, get_stats(), parse_mode="Markdown")
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBh16prxNbEgme1n_uECeShXDlUhekAAIFAQACVp29Crfk_bYORV93GQQ')
+    elif message.text.lower() == options['Ways'].lower():
+        bot.send_message(message.chat.id, 'Processing...')
+        bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBk16psBCMPBU_NmudwEd_jzye7P52AAICAQACVp29Ck7ibIHLQOT_GQQ')
+        bot.send_message(message.chat.id, get_ways(), parse_mode="Markdown")
+        bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBh16prxNbEgme1n_uECeShXDlUhekAAIFAQACVp29Crfk_bYORV93GQQ')
+    elif message.text.lower() == options['Positions'].lower():
+        bot.send_message(message.chat.id, 'Processing...')
+        bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBk16psBCMPBU_NmudwEd_jzye7P52AAICAQACVp29Ck7ibIHLQOT_GQQ')
+        bot.send_message(message.chat.id, get_positions(), parse_mode="Markdown")
+        bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBh16prxNbEgme1n_uECeShXDlUhekAAIFAQACVp29Crfk_bYORV93GQQ')
     elif message.text.lower() == options['Languages'].lower():
         bot.send_message(message.chat.id, 'Processing...')
         bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIBk16psBCMPBU_NmudwEd_jzye7P52AAICAQACVp29Ck7ibIHLQOT_GQQ')
@@ -47,6 +58,7 @@ def send_text(message):
 # Local
 # bot.remove_webhook()
 # bot.polling(none_stop=True)
+
 
 # Heroku
 @server.route('/' + TOKEN, methods=['POST'])
